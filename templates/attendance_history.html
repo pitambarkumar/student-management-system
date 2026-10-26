@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Attendance History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            text-align: center;
+        }
+        h1 { color: #4f46e5; }
+        .table-wrap { overflow-x: auto; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+        th {
+            background: #4f46e5;
+            color: white;
+            padding: 15px;
+        }
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover { background: #f1f5ff; }
+        .present { color: green; font-weight: bold; }
+        .absent { color: red; font-weight: bold; }
+        a {
+            display: inline-block;
+            margin-top: 25px;
+            color: #4f46e5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📋 Attendance History</h1>
+        <p>Student Attendance Records</p>
+
+        <div class="table-wrap">
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Roll No.</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+
+                {% for record in records %}
+                <tr>
+                    <td>{{ record[0] }}</td>
+                    <td>{{ record[1] }}</td>
+                    <td>{{ record[2] }}</td>
+                    <td class="{{ record[3]|lower }}">
+                        {{ record[3] }}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4">No attendance records found.</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <a href="/dashboard">Back to Dashboard</a>
+    </div>
+</body>
+</html>

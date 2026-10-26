@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Attendance Percentage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            padding: 30px 15px;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 950px;
+            margin: auto;
+            padding: 25px;
+            background: white;
+            border-radius: 18px;
+            text-align: center;
+        }
+        h1 { color: #4f46e5; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            background: #4f46e5;
+            color: white;
+            padding: 14px;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        .progress {
+            background: #e5e7eb;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .bar {
+            background: #22c55e;
+            height: 18px;
+        }
+        a { color: #4f46e5; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📊 Attendance Percentage</h1>
+    <p>Student Attendance Report</p>
+
+    <div style="overflow-x:auto;">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Roll No.</th>
+            <th>Total</th>
+            <th>Present</th>
+            <th>Absent</th>
+            <th>Percentage</th>
+        </tr>
+
+        {% for record in records %}
+        {% set total = record[2] %}
+        {% set present = record[3] or 0 %}
+        {% set absent = record[4] or 0 %}
+        {% set percentage = (present / total * 100) if total > 0 else 0 %}
+
+        <tr>
+            <td>{{ record[0] }}</td>
+            <td>{{ record[1] }}</td>
+            <td>{{ total }}</td>
+            <td>{{ present }}</td>
+            <td>{{ absent }}</td>
+            <td>
+                <strong>{{ "%.1f"|format(percentage) }}%</strong>
+                <div class="progress">
+                    <div class="bar" style="width: {{ percentage }}%;"></div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+
+    <p><a href="/dashboard">Back to Dashboard</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Report Card</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px 15px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+        }
+
+        .report-card {
+            background: white;
+            max-width: 650px;
+            margin: auto;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #4f46e5;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+        }
+
+        .details {
+            margin-top: 30px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f3f4f6;
+            border-radius: 10px;
+        }
+
+        .detail-row strong {
+            color: #374151;
+        }
+
+        .grade {
+            color: #4f46e5;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .result {
+            text-align: center;
+            padding: 20px;
+            margin-top: 25px;
+            border-radius: 12px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .pass {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .fail {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 13px 22px;
+            margin: 5px;
+            border: none;
+            border-radius: 9px;
+            background: #4f46e5;
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #3730a3;
+        }
+
+        .back {
+            background: #64748b;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .report-card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+
+            .buttons {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="report-card">
+
+    <div class="header">
+        <h1>🎓 Student Report Card</h1>
+        <p class="subtitle">
+            Student Management System
+        </p>
+        <h2>Academic Performance Report</h2>
+    </div>
+
+    <div class="details">
+
+        <div class="detail-row">
+            <strong>Student Name</strong>
+            <span>{{ student[1] }}</span>
+        </div>
+
+        <div class="detail-row">
+            <strong>Roll Number</strong>
+            <span>{{ student[2] }}</span>
+        </div>
+
+        <div class="detail-row">
+            <strong>Marks</strong>
+            <span>{{ student[3] }}</span>
+        </div>
+
+        <div class="detail-row">
+            <strong>Grade</strong>
+            <span class="grade">
+                {{ calculate_grade(student[3]) }}
+            </span>
+        </div>
+
+    </div>
+
+    {% if student[3] >= 40 %}
+        <div class="result pass">
+            ✓ PASS
+        </div>
+    {% else %}
+        <div class="result fail">
+            ✕ FAIL
+        </div>
+    {% endif %}
+
+    <div class="buttons">
+        <button class="btn" onclick="window.print()">
+            🖨 Print Report Card
+        </button>
+<button class="btn" onclick="downloadPDF()">
+    📄 Download PDF
+</button>
+        <a href="/search" class="btn back">
+            Back to Search
+        </a>
+    </div>
+
+</div>
+<script>
+function downloadPDF() {
+    window.print();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Attendance Simulator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .simulator {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            width: 350px;
+            max-width: 85%;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            background: #16a34a;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="simulator">
+        <h2>Smart Attendance Simulator</h2>
+        <p>Predict Your Future Attendance</p>
+<input type="text" id="roll" placeholder="Enter Roll Number" required>
+      
+      
+<button type="button" onclick="fetchAttendance()">
+    🔍 Fetch Attendance
+</button>
+
+<p id="studentName"></p>
+<p id="fetchMessage"></p>
+        <form method="POST">
+        <input type="number" id="total" name="total"
+       min="0" placeholder="Total Classes"
+       value="{{ total if total is not none else '' }}" required>
+
+<input type="number" id="present" name="present"
+       min="0" placeholder="Present Classes"
+       value="{{ present if present is not none else '' }}" required>
+
+<input type="number" id="future" name="future"
+       min="0" placeholder="Future Classes"
+       value="{{ future if future is not none else '' }}" required>
+            <button type="submit">Calculate Attendance</button>
+        </form>
+
+        {% if result is not none %}
+        <div class="result">
+            {% if result is number %}
+                Future Attendance: {{ result }}%
+            {% else %}
+                {{ result }}
+            {% endif %}
+        </div>
+        {% endif %}
+        {% if prediction %}
+<div class="result">
+    <h3>🎯 Smart Attendance Prediction</h3>
+    <p>{{ prediction }}</p>
+</div>
+{% endif %}
+
+        <p><a href="/dashboard">Back to Dashboard</a></p>
+    </div>
+    <script>
+async function fetchAttendance() {
+const roll = document.getElementById("roll").value.trim();
+if (roll === "") {
+    alert("Please enter Roll Number");
+    return;
+}
+const response = await fetch(
+    "/get_student_attendance/" + encodeURIComponent(roll)
+);
+const data = await response.json();
+if (data.error) {
+    document.getElementById("fetchMessage").textContent = data.error;
+} else {
+    document.getElementById("studentName").textContent = "Student: " + data.name;
+    document.getElementById("fetchMessage").textContent = "Total Classes: " + data.total + ", Present: " + data.present;
+
+document.getElementById("total").value = data.total;
+document.getElementById("present").value = data.present;
+}
+}
+</script>
+</body>
+</html>

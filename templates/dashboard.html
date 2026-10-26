@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Student Dashboard</h1>
+        <h2>Student Statistics</h2>
+
+        <div class="dashboard-cards">
+            <div class="stat-card total-card">
+                <h3>Total Students</h3>
+                <p>{{ total }}</p>
+            </div>
+
+            <div class="stat-card average-card">
+                <h3>Average Marks</h3>
+                <p>{{ average }}</p>
+            </div>
+
+            <div class="stat-card highest-card">
+                <h3>Highest Marks</h3>
+                <p>{{ highest }}</p>
+            </div>
+        </div>
+
+        <a href="/">Back to Home</a>
+        <br><br>
+<a href="/logout">
+    <button type="button">Logout</button>
+</a>
+<a href="/attendance_history" class="history-btn">
+    📋 View Attendance History
+</a>
+<a href="/attendance_percentage" class="percentage-btn">
+    📊 View Attendance Percentage
+</a>
+
+<a href="/attendance_simulator" class="simulator-btn">
+    🧠 Smart Attendance Simulator
+</a>
+    </div>
+</body>
+</html>
